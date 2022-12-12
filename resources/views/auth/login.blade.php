@@ -33,7 +33,7 @@ $logo=\App\Models\Utility::get_file('uploads/logo/');
         <div class="col-xl-6">
             <div class="card-body">
                 <div class="">
-                    <h2 class="mb-3 f-w-600">{{ __('Login NEW') }}</h2>
+                    <h2 class="mb-3 f-w-600">{{ __('Login NEW1') }}</h2>
                 </div>
                 <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="" id="form_data">
                     @csrf
