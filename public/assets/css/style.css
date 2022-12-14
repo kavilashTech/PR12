@@ -4519,6 +4519,7 @@ textarea.is-invalid.dataTable-input {
     margin-right: 1rem;
     font-size: 1.09375rem;
     white-space: nowrap;
+    text-align: center;
 }
 
 .navbar-brand:hover, .navbar-brand:focus {
@@ -22151,9 +22152,9 @@ select.form-control[data-multiselectsplitter-firstselect-selector], select.custo
 }
 
 .auth-wrapper .navbar {
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 6px 30px rgba(182, 186, 203, 0.3);
+    /* background: #ffffff; */
+    /* border-radius: 10px;
+    box-shadow: 0 6px 30px rgba(182, 186, 203, 0.3); */
 }
 
 .auth-wrapper .auth-content {
@@ -22370,6 +22371,12 @@ select.form-control[data-multiselectsplitter-firstselect-selector], select.custo
     right: 0;
     bottom: 40%;
     position: absolute;
+    background-color: yellow;
+}
+
+.home-img{
+    border-radius: 20px!important;
+    box-shadow: -5px 5px 10px;
 }
 
 @media only screen and (max-width: 1199px) {

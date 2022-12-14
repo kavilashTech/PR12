@@ -67,20 +67,27 @@ if (!empty($mode_setting['theme_color'])) {
 <body class="{{ $color }}">
     <!-- [ auth-signup ] start -->
     <div class="auth-wrapper auth-v3">
-        <div class="bg-auth-side bg-primary"></div>
+        <div class="bg-auth-side">
+        <img src="{{ asset('assets/images/auth/home1.jpg') }}" alt="" class="img-fluid home-img">
+    </div>
         <div class="auth-content">
-            <nav class="navbar navbar-expand-md navbar-light default">
+            <nav class="navbar navbar-expand-md default">
                 <div class="container-fluid pe-2">
                     <a class="navbar-brand" href="#">
-                        <img src="{{ $logos . $logo }}" alt="{{ env('APP_NAME') }}"
-                            class="logo logo-lg" />
+                        <img src="{{ $logos . $logo }}" width="60px" alt="{{ env('APP_NAME') }}"
+                            class="logo logo-lg pb-2" />
+                            <h2 class="ml-auto">CSI Bain Matriculation School</h2>
+                            <h3>HRMS & Payroll System</h3>
                     </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo01" style="flex-grow: 0;">
+                    
+                    </div> -->
+                    <!-- <div class="collapse navbar-collapse" id="navbarTogglerDemo01" style="flex-grow: 0;">
                         <ul class="navbar-nav align-items-center ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">{{ __('Support') }}</a>
@@ -95,7 +102,7 @@ if (!empty($mode_setting['theme_color'])) {
                                 @yield('language-bar')
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </nav>
             <div class="card">

@@ -71,7 +71,7 @@ if (!empty($mode_setting['theme_color'])) {
             <a class="navbar-brand bg-transparent" href="#">
                 {{-- <img src="{{$logo}}" alt="logo" /> --}}
                 {{-- <img src="{{ $logos . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'light_logo.png') }}"
-                    alt="{{ config('app.name', 'HRMGO') }}" alt="logo"> --}}
+                    alt="{{ config('app.name', 'Payroll') }}" alt="logo"> --}}
                 <img src="{{ $logos . '/' . 'light_logo.png' }}" alt="logo" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
