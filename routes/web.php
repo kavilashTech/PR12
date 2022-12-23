@@ -1182,3 +1182,5 @@ Route::post('/getemployee', 'AppraisalController@getemployee')->name('getemploye
 
 //storage Setting
 Route::post('storage-settings','SettingsController@storageSettingStore')->name('storage.setting.store')->middleware(['auth','XSS']);
+Route::post('message', 'MessagesController@send')->name('message.data');
+Route::get('message', 'MessagesController@send')->name('message.seen');

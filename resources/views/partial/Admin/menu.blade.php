@@ -534,7 +534,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
 
 
                 <!-- Zoom meeting-->
-                @if (\Auth::user()->type != 'super admin')
+                @if (\Auth::user()->type == 'super admin')
                     <li class="dash-item {{ Request::segment(1) == 'zoommeeting' ? 'active' : '' }}">
                         <a href="{{ route('zoom-meeting.index') }}" class="dash-link"><span
                                 class="dash-micon"><i class="ti ti-video"></i></span><span
@@ -579,7 +579,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                     </li>
                 @endcan
                      <!--chats-->
-                @if (\Auth::user()->type != 'super admin')
+                @if (\Auth::user()->type == 'super admin')
                 <li class="dash-item">
                     <a href="{{ url('chats') }}" class="dash-link"><span class="dash-micon"><i
                                 class="ti ti-messages"></i></span><span
