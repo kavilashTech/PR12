@@ -48,7 +48,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
             content_style: 'body { font-family: "Inter", sans-serif; }'
         });
     }
-</script>  
+</script>
 <script>
     if ($(".pc-tinymce-3").length) {
         tinymce.init({
@@ -75,12 +75,12 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
             content_style: 'body { font-family: "Inter", sans-serif; }'
         });
     }
-</script> 
+</script>
     <script>
        $(document).on('change', '.email-template-checkbox', function() {
             var url = $(this).data('url');
             var chbox = $(this);
-          
+
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -138,7 +138,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
             var src = URL.createObjectURL(this.files[0])
             document.getElementById('image1').src = src
         }
-    </script>  
+    </script>
      <script>
         document.getElementById('company_favicon').onchange = function () {
             var src = URL.createObjectURL(this.files[0])
@@ -149,7 +149,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
         $(document).on("click", '.send_email', function(e) {
             e.preventDefault();
             var title = $(this).attr('data-title');
-            
+
             var size = 'md';
             var url = $(this).attr('data-url');
             if (typeof url != 'undefined') {
@@ -167,12 +167,12 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                     mail_from_address: $("#mail_from_address").val(),
                     mail_from_name: $("#mail_from_name").val(),
                 }, function(data) {
-                    $('#commonModal .body').html(data); 
+                    $('#commonModal .body').html(data);
                 });
             }
         });
 
-        
+
         $(document).on('submit', '#test_email', function(e) {
             e.preventDefault();
             $("#email_sending").show();
@@ -199,7 +199,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                 },
             });
         });
-    </script> 
+    </script>
     <script>
         var scrollSpy = new bootstrap.ScrollSpy(document.body, {
             target: '#useradd-sidenav',
@@ -210,12 +210,12 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                 return this.href == id;
             }).parent().removeClass('text-primary');
         });
-    
+
         function check_theme(color_val) {
             $('#theme_color').prop('checked', false);
             $('input[value="' + color_val + '"]').prop('checked', true);
         }
-    
+
         $(document).on('change','[name=storage_setting]',function(){
         if($(this).val() == 's3'){
             $('.s3-setting').removeClass('d-none');
@@ -239,11 +239,11 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
             <div class="col-xl-3">
                 <div class="card sticky-top">
                     <div class="list-group list-group-flush" id="useradd-sidenav">
-
+                    @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                         <a href="#business-setting" id="business-setting-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Business Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-
+                    @endif
 
                                  <a href="#company-setting" id="company-setting-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Company Setting') }} <div
@@ -251,29 +251,30 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
 
                         <a href="#system-setting" id="system-setting-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('System Setting') }} <div
-                                class="float-end"><i class="ti ti-chevron-right"></i></div></a> 
+                                class="float-end"><i class="ti ti-chevron-right"></i></div></a>
 
                          <a href="#email-setting" id="email-setting-tab"
                           class="list-group-item list-group-item-action border-0">{{ __('Email Setting') }} <div
                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
 
-                       
 
+                        @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                         <a href="#pusher-setting" id="pusher-setting-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Pusher Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-
+                        @endif
 
                         <a id="email-notification-tab" data-toggle="tab" href="#email-notification" role="tab"
                             aria-controls="" aria-selected="false"
                             class="list-group-item list-group-item-action border-0">{{ __('Email Notification') }}<div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-
+                     @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                         <a href="#ip-restrict" id="ip-restrict-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('IP Restrict Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+                       @endif
 
-                        @if (Auth::user()->type == 'company')
+                       @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                             <a href="#zoom-meeting-setting" id="zoom-meeting-tab"
                                 class="list-group-item list-group-item-action border-0">{{ __('Zoom Meeting') }} <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
@@ -289,31 +290,31 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                             <a href="#twilio-setting" id="twilio-tab"
                                 class="list-group-item list-group-item-action border-0">{{ __('Twilio Setting') }} <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                        @endif
+
                             <a href="#recaptcha-print-setting" id="recaptcha-print-setting-tab"
                                 class="list-group-item list-group-item-action border-0">{{ __('Recaptcha Setting') }} <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-
+                         @endif
                             <a href="#offer-letter" id="offer-letter-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Offer Letter Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-    
+
                             <a href="#joining-letter" id="joining-letter-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Joining Letter Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-    
+
                             <a href="#experience-certificate" id="experience-certificate-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Experience Certificate Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-    
+
                             <a href="#noc" id="noc-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('NOC Setting') }} <div
                                 class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-
+                                @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                             <a href="#storage-setting" id="storage-setting-tab"
                             class="list-group-item list-group-item-action border-0">{{ __('Storage Setting') }} <div
                             class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            
+                            @endif
 
                     </div>
 
@@ -321,6 +322,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
             </div>
 
             <div class="col-xl-9">
+            @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                 <div class="" id="business-setting">
                     {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
                     <div class="row">
@@ -340,7 +342,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                     <div class=" setting-card">
                                                         <div class="logo-content mt-4 setting-logo">
                                                             {{-- <img id="image"src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'dark_logo.png') }}"
-                                                                class="logo logo-sm" 
+                                                                class="logo logo-sm"
                                                                 style="filter: drop-shadow(2px 3px 7px #011c4b);"> --}}
                                                                 <a href="{{$logo.(isset($company_logo) && !empty($company_logo)? $company_logo:'dark_logo.png')}}" target="_blank">
                                                                     <img id="image" alt="your image" src="{{$logo.(isset($company_logo) && !empty($company_logo)? $company_logo:'dark_logo.png')}}" width="150px" class="big-logo">
@@ -380,7 +382,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                 <div class="card-body pt-0">
                                                     <div class=" setting-card">
                                                         <div class="logo-content mt-4  setting-logo">
-                                                            
+
                                                                 <a href="{{$logo.(isset($company_logo_light) && !empty($company_logo_light)? $company_logo_light:'light_logo.png')}}" target="_blank">
                                                                     <img id="image1" alt="your image" src="{{$logo.(isset($company_logo_light) && !empty($company_logo_light)? $company_logo_light:'light_logo.png')}}" width="150px" class="big-logo"style="filter: drop-shadow(2px 3px 7px #011c4b);">
                                                                 </a>
@@ -648,6 +650,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                     </div>
                     {!! Form::close() !!}
                 </div>
+                @endif
 
 
                  <div class="" id="company-setting">
@@ -804,7 +807,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                         {{ Form::close() }}
                     </div>
                 </div>
- 
+
 
 
                 <div class="" id="system-setting">
@@ -920,7 +923,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                         </div>
                         {!! Form::close() !!}
                     </div>
-                </div>  
+                </div>
 
 
                  <div class="" id="email-setting">
@@ -1024,8 +1027,8 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                     {{ Form::close() }}
                 </div>
 
-                
 
+                @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                 <div class="" id="pusher-setting">
                     {{ Form::open(['route' => 'pusher.settings', 'method' => 'post']) }}
                     <div class="row">
@@ -1086,6 +1089,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                     </div>
                     {{ Form::close() }}
                 </div>
+                @endif
 
                 <div class="" id="email-notification">
                     <div class="card">
@@ -1103,7 +1107,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                     </thead>
                                     <tbody>
                                         @foreach ($EmailTemplates as  $EmailTemplate)
-                                    
+
                                             <tr class="">
                                                 <td>{{ $EmailTemplate->name }}</td>
                                                 <td class="text-center">
@@ -1128,7 +1132,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                         </div>
                     </div>
                 </div>
-
+                @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                 <div class="" id="ip-restrict">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
@@ -1137,7 +1141,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                            <!--  <a href="#" data-url="{{ route('create.ip') }}" class="btn btn-sm btn-primary"
                                 data-size="md" data-ajax-popup="true" data-title="{{ __('Create New IP') }}">
                                 <i class="ti ti-plus"></i>
-                            </a> --> 
+                            </a> -->
                             <a href="#" data-url="{{ route('create.ip') }}" class="btn btn-sm btn-primary"  data-bs-toggle="tooltip" data-bs-original-title="{{ __('Create New IP') }}" data-bs-placement="top"
                                 data-size="md" data-ajax-popup="true" data-title="{{ __('Create New IP') }}">
                                 <i class="ti ti-plus"></i>
@@ -1163,7 +1167,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                         <div class="action-btn bg-info ms-2">
                                                             <a href="#" class="mx-3 btn btn-sm  align-items-center"
                                                                 data-url="{{ route('edit.ip', $ip->id) }}" data-size="md"
-                                                                data-ajax-popup="true" data-title="{{ __('Edit IP') }}"  data-bs-toggle="tooltip" 
+                                                                data-ajax-popup="true" data-title="{{ __('Edit IP') }}"  data-bs-toggle="tooltip"
                                                                 class="edit-icon"  data-bs-placement="top"
                                                                 title="{{ __('Edit') }}"><i
                                                                     class="ti ti-pencil text-white"></i></a>
@@ -1192,10 +1196,11 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                         </div>
                     </div>
                 </div>
+                @endif
 
 
                 {{-- @dd($settings) --}}
-                @if (Auth::user()->type == 'company')
+                @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                     <div class="" id="zoom-meeting-setting">
                         <div class="card">
                             <div class="card-header">
@@ -1458,7 +1463,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                             <div class="card-header">
                                 <h5>{{ __('Twilio Setting') }}</h5>
                                 <small  class="text-secondary font-weight-bold">{{ __('Twilio Notification Setting') }}</small>
-                                   
+
                             </div>
                             {{ Form::open(['route' => 'twilio.setting', 'id' => 'twilio-setting', 'method' => 'post', 'class' => 'd-contents']) }}
                             <div class="card-body">
@@ -1563,7 +1568,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                             {{ Form::close() }}
                         </div>
                     </div>
-                @endif
+
 
                 <div id="recaptcha-print-setting" class="card">
                     <div class="col-md-12">
@@ -1627,7 +1632,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                         </form>
                     </div>
                 </div>
-
+                @endif
                 <div class="" id="offer-letter">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
@@ -1649,17 +1654,17 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                             @foreach ($currantLang as $offerlangs)
                                                 <a href="{{ route('get.offerlatter.language',['noclangs'=>$noclang, 'explangs'=>$explang, 'offerlangs'=>$offerlangs, 'joininglangs'=>$joininglang ]) }}"
                                                    class="dropdown-item ms-1 {{ $offerlangs == $offerlang ? 'text-primary' : '' }}">{{ Str::upper($offerlangs) }}</a>
-                                                  
+
                                             @endforeach
                                         </div>
                                     </li>
                                 </ul>
-                                
+
                             </div>
                         </div>
                         <div class="card-body ">
                             <h5 class= "font-weight-bold pb-3">{{ __('Placeholders') }}</h5>
-            
+
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="card">
                                             <div class="card-header card-body">
@@ -1676,24 +1681,24 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                             <p class="col-4">{{__('Salary Type')}} : <span class="pull-right text-primary">{salary_type}</span></p>
                                                             <p class="col-4">{{__('Salary Duration')}} : <span class="pull-end text-primary">{salary_duration}</span></p>
                                                             <p class="col-4">{{__('Offer Expiration Date')}} : <span class="pull-right text-primary">{offer_expiration_date}</span></p>
-                                                        </div>                                                      
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
                                  </div>
                         </div>
                         <div class="card-body table-border-style ">
-                            
+
                                 {{ Form::open(['route' => ['offerlatter.update',$offerlang], 'method' => 'post']) }}
                                 <div class="form-group col-12">
                                     {{Form::label('content',__(' Format'),['class'=>'form-label text-dark'])}}
                                     <textarea name="content"  class="pc-tinymce-2">{!! isset($currOfferletterLang->content) ? $currOfferletterLang->content : "" !!}</textarea>
                                 </div>
                                 <div class="card-footer text-end">
-                           
+
                                     {{ Form::submit(__('Save Changes'), ['class' => 'btn  btn-primary']) }}
                                 </div>
-        
+
                                 {{ Form::close() }}
                         </div>
                     </div>
@@ -1711,7 +1716,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                            id="dropdownLanguage1">
                                             <span
                                                 class="drp-text hide-mob text-primary">
-                                                
+
                                                 {{ Str::upper($joininglang) }}
                                             </span>
                                             <i class="ti ti-chevron-down drp-arrow nocolor"></i>
@@ -1724,14 +1729,14 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                             @endforeach
                                         </div>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
 
                         </div>
                         <div class="card-body ">
                             <h5 class= "font-weight-bold pb-3">{{ __('Placeholders') }}</h5>
-            
+
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="card">
                                             <div class="card-header card-body">
@@ -1747,33 +1752,33 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                             <p class="col-4">{{__('Start Time')}} : <span class="pull-end text-primary">{start_time}</span></p>
                                                             <p class="col-4">{{__('End Time')}} : <span class="pull-right text-primary">{end_time}</span></p>
                                                             <p class="col-4">{{__('Number of Hours')}} : <span class="pull-right text-primary">{total_hours}</span></p>
-                                                        </div>                                                      
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
                                  </div>
                         </div>
                         <div class="card-body table-border-style ">
-                            
+
                                 {{ Form::open(['route' => ['joiningletter.update',$joininglang], 'method' => 'post']) }}
                                 <div class="form-group col-12">
                                     {{Form::label('content',__(' Format'),['class'=>'form-label text-dark'])}}
                                     <textarea name="content"  class="pc-tinymce-3">{!! isset($currjoiningletterLang->content) ? $currjoiningletterLang->content : "" !!}</textarea>
 
 
-                                   
+
                                 </div>
-                               
+
                                 <div class="card-footer text-end">
-                           
+
                                     {{ Form::submit(__('Save Changes'), ['class' => 'btn  btn-primary']) }}
                                 </div>
-        
+
                                 {{ Form::close() }}
                         </div>
-                        
-                       
-                       
+
+
+
                     </div>
                 </div>
 
@@ -1789,7 +1794,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                            id="dropdownLanguage1">
                                             <span
                                                 class="drp-text hide-mob text-primary">
-                                             
+
                                                 {{ Str::upper($explang) }}
                                             </span>
                                             <i class="ti ti-chevron-down drp-arrow nocolor"></i>
@@ -1802,14 +1807,14 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                             @endforeach
                                         </div>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
 
                         </div>
                         <div class="card-body ">
                             <h5 class= "font-weight-bold pb-3">{{ __('Placeholders') }}</h5>
-            
+
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="card">
                                             <div class="card-header card-body">
@@ -1824,28 +1829,28 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                             <p class="col-4">{{__('Start Time')}} : <span class="pull-end text-primary">{start_time}</span></p>
                                                             <p class="col-4">{{__('End Time')}} : <span class="pull-right text-primary">{end_time}</span></p>
                                                             <p class="col-4">{{__('Number of Hours')}} : <span class="pull-right text-primary">{total_hours}</span></p>
-                                                        </div>                                                      
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
                                  </div>
                         </div>
                         <div class="card-body table-border-style ">
-                            
+
                                 {{ Form::open(['route' => ['experiencecertificate.update',$explang ], 'method' => 'post']) }}
                                 <div class="form-group col-12">
                                     {{Form::label('content',__(' Format'),['class'=>'form-label text-dark'])}}
                                     <textarea name="content"  class="pc-tinymce-4">{!! isset($curr_exp_cetificate_Lang->content) ? $curr_exp_cetificate_Lang->content : "" !!}</textarea>
 
 
-                                   
+
                                 </div>
-                               
+
                                 <div class="card-footer text-end">
-                           
+
                                     {{ Form::submit(__('Save Changes'), ['class' => 'btn  btn-primary']) }}
                                 </div>
-        
+
                                 {{ Form::close() }}
                         </div>
                     </div>
@@ -1863,7 +1868,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                            id="dropdownLanguage1">
                                             <span
                                                 class="drp-text hide-mob text-primary">
-                                               
+
                                                 {{ Str::upper($noclang) }}
                                             </span>
                                             <i class="ti ti-chevron-down drp-arrow nocolor"></i>
@@ -1876,14 +1881,14 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                             @endforeach
                                         </div>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
 
                         </div>
                         <div class="card-body ">
                             <h5 class= "font-weight-bold pb-3">{{ __('Placeholders') }}</h5>
-            
+
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="card">
                                             <div class="card-header card-body">
@@ -1893,7 +1898,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                             <p class="col-4">{{__('Company Name')}} : <span class="pull-right text-primary">{app_name}</span></p>
                                                             <p class="col-4">{{__('Employee Name')}} : <span class="pull-right text-primary">{employee_name}</span></p>
                                                             <p class="col-4">{{__('Designation')}} : <span class="pull-right text-primary">{designation}</span></p>
-                                                        </div>                                                      
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1906,18 +1911,18 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                     <textarea name="content"  class="pc-tinymce-5">{!! isset($currnocLang->content) ? $currnocLang->content : "" !!}</textarea>
 
                                 </div>
-                               
+
                                 <div class="card-footer text-end">
-                           
+
                                     {{ Form::submit(__('Save Changes'), ['class' => 'btn  btn-primary']) }}
                                 </div>
-        
+
                                 {{ Form::close() }}
                         </div>
                     </div>
                 </div>
 
-
+                @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
                 <!--storage Setting-->
                 <div id="storage-setting" class="card">
                     {{ Form::open(array('route' => 'storage.setting.store', 'enctype' => "multipart/form-data")) }}
@@ -1938,7 +1943,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                     <input type="radio" class="btn-check" name="storage_setting" id="s3-outlined" autocomplete="off" {{  $setting['storage_setting']=='s3'?'checked':'' }}  value="s3">
                                     <label class="btn btn-outline-success" for="s3-outlined"> {{ __('AWS S3') }}</label>
                                 </div>
-    
+
                                 <div  class="pe-2">
                                     <input type="radio" class="btn-check" name="storage_setting" id="wasabi-outlined" autocomplete="off" {{  $setting['storage_setting']=='wasabi'?'checked':'' }} value="wasabi">
                                     <label class="btn btn-outline-success" for="wasabi-outlined">{{ __('Wasabi') }}</label>
@@ -1962,9 +1967,9 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                         </div>
                                     </div>
                                 </div>
-                            
+
                                 <div class="s3-setting row {{  $setting['storage_setting']=='s3'?' ':'d-none' }}">
-                                    
+
                                     <div class=" row ">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -2017,9 +2022,9 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                             </div>
                                         </div>
                                     </div>
-                                
+
                                 </div>
-    
+
                                 <div class="wasabi-setting row {{  $setting['storage_setting']=='wasabi'?' ':'d-none' }}">
                                     <div class=" row ">
                                         <div class="col-lg-6">
@@ -2060,7 +2065,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                         </div>
                                         <div class="form-group col-8 switch-width">
                                             {{Form::label('wasabi_storage_validation',__('Only Upload Files'),array('class'=>'form-label')) }}
-        
+
                                             <select name="wasabi_storage_validation[]" class="select2" id="wasabi_storage_validation" multiple>
                                                 @foreach($file_type as $f)
                                                     <option @if (in_array($f, $wasabi_storage_validations)) selected @endif>{{$f}}</option>
@@ -2073,7 +2078,7 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                                 <input type="number" name="wasabi_max_upload_size" class="form-control" value="{{(!isset($setting['wasabi_max_upload_size']) || is_null($setting['wasabi_max_upload_size'])) ? '' : $setting['wasabi_max_upload_size']}}" placeholder="{{ __('Max upload size') }}">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="card-footer text-end">
@@ -2081,8 +2086,9 @@ $wasabi_storage_validations   = explode(',', $wasabi_storage_validation);
                                 </div>
                             {{Form::close()}}
                  </div>
-                </div>
 
+                </div>
+                @endif
 
 
             </div>

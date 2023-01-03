@@ -16,14 +16,12 @@ $mode_setting = \App\Models\Utility::mode_layout();
     class="dash-sidebar light-sidebar {{ isset($mode_setting['is_sidebar_transperent']) && $mode_setting['is_sidebar_transperent'] == 'on' ? 'transprent-bg' : '' }}">
     <div class="navbar-wrapper">
         <div class="m-header main-logo">
-           
-            <a href="{{ route('home') }}" class="b-brand">
+             <a href="{{ route('home') }}" class="b-brand">
                 <!-- ========   change your logo hear   ============ -->
                 <img src="{{ $logos . $logo }}" alt="{{ env('APP_NAME') }}"
                     class="logo logo-lg" style="height: 40px;" />
-               
-            </a>
-        
+                </a>
+
         </div>
         <div class="navbar-content">
             <ul class="dash-navbar">
@@ -34,21 +32,21 @@ $mode_setting = \App\Models\Utility::mode_layout();
                     <a href="{{ route('home') }}" class="dash-link"><span class="dash-micon"><i
                                 class="ti ti-home"></i></span><span
                             class="dash-mtext">{{ __('Dashboard') }}</span></a>
-                </li> 
+                </li>
                 @endif
                 @if (\Auth::user()->type == 'company')
-                <li
-                        class="dash-item dash-hasmenu  {{ Request::segment(1) == 'null' ? 'active dash-trigger' : '' }}">
-                        <a href="#" class="dash-link"><span class="dash-micon"><i
-                                    class="ti ti-home"></i></span><span
-                                class="dash-mtext">{{ __('Dashboard') }}</span><span class="dash-arrow"><i
-                                    data-feather="chevron-right"></i></span></a>
+                <li class="dash-item dash-hasmenu  {{ Request::segment(1) == 'null' ? 'active dash-trigger' : '' }}">
+                        <a href="#" class="dash-link"><span class="dash-micon">
+                            <i class="ti ti-home"></i></span>
+                            <span class="dash-mtext">{{ __('Dashboard') }}</span>
+                            <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
+                        </a>
                         <ul class="dash-submenu ">
                             <li class="dash-item {{ ( Request::segment(1) == null   || Request::segment(1) == 'report') ? ' active dash-trigger' : ''}}">
                                 <a class="dash-link"
                                     href="{{ route('home') }}">{{ __('Overview') }}</a>
                             </li>
-                          
+
                             @if (Gate::check('Manage Report'))
                     <li class="dash-item dash-hasmenu">
                         <a href="#!" class="dash-link"><span class=""><i
@@ -95,14 +93,14 @@ $mode_setting = \App\Models\Utility::mode_layout();
                         </ul>
                     </li>
                 @endif
-                          
+
 
                         </ul>
                     </li>
                     @endif
                 <!--dashboard-->
 
-                <!-- user-->
+                <!-- user?-->
                 @if (\Auth::user()->type == 'super admin')
                     <li class="dash-item">
                         <a href="{{ route('user.index') }}" class="dash-link"><span class="dash-micon"><i
@@ -117,30 +115,34 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                     class="dash-mtext">{{ __('Staff') }}</span><span class="dash-arrow"><i
                                         data-feather="chevron-right"></i></span></a>
                             <ul class="dash-submenu">
-                                @can('Manage User')
+                            @if (Gate::check('Manage User'))
                                     <li class="dash-item">
                                         <a class="dash-link"
                                             href="{{ route('user.index') }}">{{ __('User') }}</a>
                                     </li>
-                                @endcan
-                                @can('Manage Role')
+                               @endif
+                               @if (Gate::check('Manage Role'))
+
                                     <li class="dash-item">
                                         <a class="dash-link"
                                             href="{{ route('roles.index') }}">{{ __('Role') }}</a>
                                     </li>
-                                @endcan
-                                @can('Manage Employee Profile')
+                                @endif
+                                @if (Gate::check('Manage Employee Profile'))
+
                                     <li class="dash-item">
                                         <a class="dash-link"
                                             href="{{ route('employee.profile') }}">{{ __('Employee Profile') }}</a>
                                     </li>
-                                @endcan
-                                @can('Manage Employee Last Login')
+
+                                @endif
+                                @if (Gate::check('Manage Employee Last Login'))
+
                                     <li class="dash-item">
                                         <a class="dash-link"
                                             href="{{ route('lastlogin') }}">{{ __('Last Login') }}</a>
                                     </li>
-                                @endcan
+                                @endif
 
                             </ul>
                         </li>
@@ -179,14 +181,18 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 class="dash-mtext">{{ __('Payroll') }}</span><span class="dash-arrow"><i
                                     data-feather="chevron-right"></i></span></a>
                         <ul class="dash-submenu ">
+                        @if (Gate::check('Manage Set Salary'))
                             <li class="dash-item {{ Request::segment(1) == 'setsalary' ? 'active' : '-' }}">
                                 <a class="dash-link"
                                     href="{{ route('setsalary.index') }}">{{ __('Set Salary') }}</a>
                             </li>
+                            @endif
+                            @if (Gate::check('Manage Pay Slip'))
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('payslip.index') }}">{{ __('Payslip') }}</a>
                             </li>
+                            @endif
 
                         </ul>
                     </li>
@@ -221,18 +227,19 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 class="dash-mtext">{{ __('Timesheet') }}</span><span class="dash-arrow"><i
                                     data-feather="chevron-right"></i></span></a>
                         <ul class="dash-submenu">
-                            @can('Manage TimeSheet')
+                        @if (Gate::check('Manage TimeSheet'))
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('timesheet.index') }}">{{ __('Timesheet') }}</a>
                                 </li>
-                            @endcan
-                            @can('Manage Leave')
+                            @endif
+                            @if (Gate::check('Manage Leave'))
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('leave.index') }}">{{ __('Manage Leave') }}</a>
                                 </li>
-                            @endcan
+                            @endif
+                            @if (Gate::check('Manage Attendance'))
                             @can('Manage Attendance')
                                 <li class="dash-item dash-hasmenu">
                                     <a href="#!" class="dash-link"><span
@@ -252,6 +259,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                     </ul>
                                 </li>
                             @endcan
+                            @endif
                         </ul>
                     </li>
                 @endif
@@ -304,12 +312,14 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                         href="{{ route('accountlist.index') }}">{{ __('Account List') }}</a>
                                 </li>
                             @endcan
-                            @can('View Balance Account List')
+                            @if (Gate::check('Show Balance Account List'))
+                            @can('Show Balance Account List')
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('accountbalance') }}">{{ __('Account Balance') }}</a>
                                 </li>
                             @endcan
+                            @endif
                             @can('Manage Payee')
                                 <li class="dash-item">
                                     <a class="dash-link"
@@ -387,45 +397,65 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 class="dash-mtext">{{ __('HR Admin Setup') }}</span><span class="dash-arrow"><i
                                     data-feather="chevron-right"></i></span></a>
                         <ul class="dash-submenu">
+                        @can('Manage Awards')
                             <li class="dash-item {{ Request::segment(1) == 'award' ? 'active' : '' }}">
                                 <a class="dash-link" href="{{ route('award.index') }}">{{ __('Award') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Transfer')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('transfer.index') }}">{{ __('Transfer') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Resignation')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('resignation.index') }}">{{ __('Resignation') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Travels')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('travel.index') }}">{{ __('Trip') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Promotion')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('promotion.index') }}">{{ __('Promotion') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Complaint')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('complaint.index') }}">{{ __('Complaints') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Warning')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('warning.index') }}">{{ __('Warning') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Termination')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('termination.index') }}">{{ __('Termination') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Announcement')
                             <li class="dash-item">
                                 <a class="dash-link"
                                     href="{{ route('announcement.index') }}">{{ __('Announcement') }}</a>
                             </li>
+                        @endcan
+                        @can('Manage Holiday')
                             <li class="dash-item {{ Request::segment(1) == 'holiday' ? ' active' : '' }}">
                                 <a class="dash-link"
                                     href="{{ route('holiday.index') }}">{{ __('Holidays') }}</a>
                             </li>
+                        @endcan
                         </ul>
                     </li>
                 @endif
@@ -500,20 +530,23 @@ $mode_setting = \App\Models\Utility::mode_layout();
                      <a href="{{route('contract.index')}}" class="dash-link"><span class="dash-micon"><i class="ti ti-device-floppy"></i></span><span class="dash-mtext">{{__('Contracts')}}</span></a>
                  </li>
                  @endcan
-                 
+
                 {{-- @endcan --}}
-               
+
 
                 <!-- ticket-->
-                @can('Manage Ticket')
+                @if (Gate::check('Manage Ticket') )
+
                     <li class="dash-item {{ Request::segment(1) == 'ticket' ? 'active' : '' }}">
                         <a href="{{ route('ticket.index') }}" class="dash-link"><span class="dash-micon"><i
                                     class="ti ti-ticket"></i></span><span
                                 class="dash-mtext">{{ __('Ticket') }}</span></a>
                     </li>
-                @endcan
+
+                @endif
 
                 <!-- Event-->
+                @if (Gate::check('Manage Event') )
                 @can('Manage Event')
                     <li class="dash-item">
                         <a href="{{ route('event.index') }}" class="dash-link"><span class="dash-micon"><i
@@ -521,8 +554,9 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 class="dash-mtext">{{ __('Event') }}</span></a>
                     </li>
                 @endcan
+                @endif
 
-
+                @if (Gate::check('Manage Meeting') )
                 <!--meeting-->
                 @can('Manage Meeting')
                     <li class="dash-item {{ Request::segment(1) == 'meeting' ? 'active' : '' }}">
@@ -531,6 +565,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 class="dash-mtext">{{ __('Meeting') }}</span></a>
                     </li>
                 @endcan
+                @endif
 
 
                 <!-- Zoom meeting-->
@@ -560,13 +595,19 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 class="dash-mtext">{{ __('Document') }}</span></a>
                     </li>
                 @endcan
-                
+
                 {{-- Email Template --}}
                 @if(\Auth::user()->type == 'company')
                     <li class="dash-item {{ (Request::route()->getName() == 'email_template.show' || Request::segment(1) == 'email_template_lang' || Request::route()->getName() == 'manageemail.lang') ? 'active' : '' }}">
                         <a href="{{ route('manage.email.language',[$emailTemplate ->id,\Auth::user()->lang]) }}" class="dash-link"><span class="dash-micon"><i class="ti ti-template"></i></span><span class="dash-mtext">{{__('Email Templates')}}</span></a>
                     </li>
                 @endif
+
+                @if (Gate::check('Manage EmailTemplate'))
+                <li class="dash-item {{ (Request::route()->getName() == 'email_template.show' || Request::segment(1) == 'email_template_lang' || Request::route()->getName() == 'manageemail.lang') ? 'active' : '' }}">
+                        <a href="{{ route('manage.email.language',[$emailTemplate ->id,\Auth::user()->lang]) }}" class="dash-link"><span class="dash-micon"><i class="ti ti-template"></i></span><span class="dash-mtext">{{__('Email Templates')}}</span></a>
+                    </li>
+                @endcan
                 <!--company policy-->
 
 
@@ -586,7 +627,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                             class="dash-mtext">{{ __('Messenger') }}</span></a>
                 </li>
             @endif
-               
+
                 @if (\Auth::user()->type == 'super admin')
                     <li class="dash-item ">
                         <a href="{{ route('plan_request.index') }}" class="dash-link"><span
@@ -621,52 +662,62 @@ $mode_setting = \App\Models\Utility::mode_layout();
                 @endif
 
                 <!--report-->
-                <!-- @if (Gate::check('Manage Report'))
+                @if (Gate::check('Manage Income Vs Expense Report') || Gate::check('Manage Monthly Attendance Report') || Gate::check('Manage Leave Report') || Gate::check('Manage Account Statement Report') || Gate::check('Manage Payroll Report') || Gate::check('Manage Timesheet Report')  )
                     <li class="dash-item dash-hasmenu">
                         <a href="#!" class="dash-link"><span class="dash-micon"><i
                                     class="ti ti-list"></i></span><span
                                 class="dash-mtext">{{ __('Report') }}</span><span
                                 class="dash-arrow"><i data-feather="chevron-right"></i></span></a>
                         <ul class="dash-submenu">
-                            @can('Manage Report')
+
+                            @if (Gate::check('Manage Income Vs Expense Report'))
+
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('report.income-expense') }}">{{ __('Income Vs Expense') }}</a>
                                 </li>
-
+                               @endif
+                               @if (Gate::check('Manage Monthly Attendance Report'))
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('report.monthly.attendance') }}">{{ __('Monthly Attendance') }}</a>
                                 </li>
-
+                                @endif
+                                @if (Gate::check('Manage Leave Report'))
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('report.leave') }}">{{ __('Leave') }}</a>
                                 </li>
+                                @endif
 
-
+                                @if (Gate::check('Manage Account Statement Report'))
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('report.account.statement') }}">{{ __('Account Statement') }}</a>
                                 </li>
+                                @endif
+                                @if (Gate::check('Manage Payroll Report'))
 
 
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('report.payroll') }}">{{ __('Payroll') }}</a>
                                 </li>
+                                @endif
 
+                                @if (Gate::check('Manage Timesheet Report'))
 
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('report.timesheet') }}">{{ __('Timesheet') }}</a>
                                 </li>
-                            @endcan
+                                @endif
+
 
 
                         </ul>
                     </li>
-                @endif -->
+                @endif
 
 
                 <!--constant-->
@@ -682,8 +733,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                     Gate::check('Manage Deduction Options') ||
                     Gate::check('Manage Expense Type') ||
                     Gate::check('Manage Income Type') ||
-                    Gate::check('Manage
-                                             Payment Type') ||
+                    Gate::check('Manage Payment Type') ||
                     Gate::check('Manage Leave Type') ||
                     Gate::check('Manage Training Type') ||
                     Gate::check('Manage Job Category') ||
@@ -693,7 +743,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                     class="ti ti-table"></i></span><span
                                 class="dash-mtext">{{ __('HRM System Setup') }}</span></a>
                         </li>
-                        <!-- <ul class="dash-submenu">
+                     <ul class="dash-submenu">
                             @can('Manage Branch')
                                 <li class="dash-item {{ request()->is('branch*') ? 'active' : '' }}">
                                     <a class="dash-link"
@@ -813,12 +863,13 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                         href="{{ route('job-stage.index') }}">{{ __('Job Stage') }}</a>
                                 </li>
                             @endcan
-
+                            @if (\Auth::user()->type != 'company' || \Auth::user()->type != 'super admin')
                             <li
                                 class="dash-item {{ request()->is('performanceType*') ? 'active' : '' }}">
                                 <a class="dash-link"
                                     href="{{ route('performanceType.index') }}">{{ __('Performance Type') }}</a>
                             </li>
+                            @endif
 
                             @can('Manage Competencies')
                                 <li class="dash-item {{ request()->is('competencies*') ? 'active' : '' }}">
@@ -828,7 +879,7 @@ $mode_setting = \App\Models\Utility::mode_layout();
                                 </li>
                             @endcan
                         </ul>
-                    </li> -->
+                    </li>
                 @endif
                 <!--constant-->
 
