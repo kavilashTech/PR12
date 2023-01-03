@@ -84,6 +84,7 @@
                                 'Plan',
                                 'Assets',
                                 'Document',
+                                'EmailTemplate',
                                 'Employee Profile',
                                 'Employee Last Login',
                                 'Indicator',
@@ -106,7 +107,15 @@
                                 'Interview Schedule',
                                 'Career',
                                 'Report',
+                                'Income Vs Expense Report',
+                                'Monthly Attendance Report',
                                 'Performance Type',
+                                'Leave Report',
+                                'Account Statement Report',
+                                'Payroll Report',
+                                'Timesheet Report',
+                                'Balance Account List',
+                                'System Settings'
                             ];
                             if (Auth::user()->type == 'super admin') {
                                 $modules[] = 'Language';
@@ -116,18 +125,25 @@
                             <tr>
                                 <td><input type="checkbox" class="align-middle ischeck  form-check-input"
                                         name="checkall" data-id="{{ str_replace(' ', '', $module) }}"></td>
-                                <td><label class="ischeck"
+                                <td>
+                                    <label class="ischeck"
                                         data-id="{{ str_replace(' ', '', $module) }}">{{ ucfirst($module) }}</label>
                                 </td>
                                 <td>
+
                                     <div class="row">
+
+
                                         @if (in_array('Manage ' . $module, (array) $permissions))
+
                                             @if ($key = array_search('Manage ' . $module, $permissions))
                                                 <div class="col-md-3 custom-control custom-checkbox">
                                                     {{ Form::checkbox('permissions[]', $key, $role->permission, ['class' => 'form-check-input isscheck isscheck_' . str_replace(' ', '', $module), 'id' => 'permission' . $key]) }}
                                                     {{ Form::label('permission' . $key, 'Manage', ['class' => 'form-label font-weight-500']) }}<br>
                                                 </div>
+
                                             @endif
+
                                         @endif
                                         @if (in_array('Create ' . $module, (array) $permissions))
                                             @if ($key = array_search('Create ' . $module, $permissions))
@@ -203,6 +219,7 @@
                                                 </div>
                                             @endif
                                         @endif
+
                                     </div>
                                 </td>
                             </tr>

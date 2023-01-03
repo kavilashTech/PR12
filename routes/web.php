@@ -12,6 +12,29 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Clear application cache:
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return 'Application cache has been cleared';
+});
+
+//Clear route cache:
+Route::get('/route-cache', function() {
+	Artisan::call('route:cache');
+    return 'Routes cache has been cleared';
+});
+
+//Clear config cache:
+Route::get('/config-cache', function() {
+ 	Artisan::call('config:cache');
+ 	return 'Config cache has been cleared';
+});
+
+// Clear view cache:
+Route::get('/view-clear', function() {
+    Artisan::call('view:clear');
+    return 'View cache has been cleared';
+});
 
 Route::get('/', function () {
     return view('/home');
@@ -1127,30 +1150,30 @@ Route::post('user-reset-password/{id}', 'UserController@userPasswordReset')->nam
  Route::resource('contract_type', 'ContractTypeController')->middleware(['auth','XSS']);
  Route::resource('contract', 'ContractController')->middleware(['auth','XSS']);
 Route::post('/contract_status_edit/{id}', 'ContractController@contract_status_edit')->name('contract.status')->middleware(['auth','XSS']);
- 
+
   Route::post('/contract/{id}/file', ['as' => 'contracts.file.upload','uses' => 'ContractController@fileUpload',])->middleware(['auth','XSS']);
  Route::get('/contract/{id}/file/{fid}', ['as' => 'contracts.file.download','uses' => 'ContractController@fileDownload',])->middleware(['auth','XSS']);
  Route::delete('/contract/{id}/file/delete/{fid}', ['as' => 'contracts.file.delete','uses' => 'ContractController@fileDelete',])->middleware(['auth','XSS']);
  Route::post('/contract/{id}/notestore', ['as' => 'contracts.note.store','uses' => 'ContractController@noteStore',])->middleware(['auth']);
  Route::get('/contract/{id}/note', ['as' => 'contracts.note.destroy','uses' => 'ContractController@noteDestroy',])->middleware(['auth']);
- 
+
  Route::post('contract/{id}/description', 'ContractController@descriptionStore')->name('contracts.description.store')->middleware(['auth']);
- 
- 
+
+
  Route::post('/contract/{id}/commentstore', ['as' => 'comment.store',    'uses' => 'ContractController@commentStore',]);
  Route::get('/contract/{id}/comment', ['as' => 'comment.destroy','uses' => 'ContractController@commentDestroy',]);
- 
- 
+
+
  Route::get('/contract/copy/{id}',['as' => 'contracts.copy','uses' =>'ContractController@copycontract'])->middleware(['auth','XSS']);
  Route::post('/contract/copy/store/{id}',['as' => 'contracts.copystore','uses' =>'ContractController@copycontractstore'])->middleware(['auth','XSS']);
- 
+
  Route::get('contract/{id}/get_contract', 'ContractController@printContract')->name('get.contract');
  Route::get('contract/pdf/{id}', 'ContractController@pdffromcontract')->name('contract.download.pdf');
- 
+
  Route::get('/contract/{id}/mail', ['as' => 'send.mail.contract','uses' => 'ContractController@sendmailContract',]);
  Route::get('/signature/{id}', 'ContractController@signature')->name('signature')->middleware(['auth','XSS']);
  Route::post('/signaturestore', 'ContractController@signatureStore')->name('signaturestore')->middleware(['auth','XSS']);
- 
+
 //offer Letter
 Route::post('setting/offerlatter/{lang?}', 'SettingsController@offerletterupdate')->name('offerlatter.update');
 Route::get('setting/offerlatter', 'SettingsController@index')->name('get.offerlatter.language');

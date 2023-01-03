@@ -90,7 +90,7 @@ class EmailTemplateController extends Controller
 
     public function update(Request $request,$id)
     {
-//       
+//
 
 //        if(\Auth::user()->can('Edit Email Template'))
 //        {
@@ -110,7 +110,7 @@ class EmailTemplateController extends Controller
             }
 
         $emailTemplate       = EmailTemplate::where('id',$id)->first();
-//          
+//
         $emailTemplate->from = $request->from;
 
         $emailTemplate->save();
@@ -157,7 +157,7 @@ class EmailTemplateController extends Controller
     // Used For View Email Template Language Wise
     public function manageEmailLang($id, $lang = 'en')
     {
-        if(\Auth::user()->type == 'company')
+        if(\Auth::user()->type == 'company' || \Auth::user()->type == 'Sc Admin')
         {
             $languages         = Utility::languages();
             $emailTemplate     = EmailTemplate::first();
@@ -168,7 +168,7 @@ class EmailTemplateController extends Controller
                 $currEmailTempLang       = EmailTemplateLang::where('parent_id', '=', $id)->where('lang', 'en')->first();
                 $currEmailTempLang->lang = $lang;
             }
-            if(\Auth::user()->type == 'company')
+            if(\Auth::user()->type == 'company' || \Auth::user()->type == 'Sc Admin')
             {
                 $emailTemplate     = EmailTemplate::where('id', '=', $id)->first();
             }
@@ -188,7 +188,7 @@ class EmailTemplateController extends Controller
     // Used For Store Email Template Language Wise
     public function storeEmailLang(Request $request, $id)
     {
-        if(\Auth::user()->type == 'company')
+        if(\Auth::user()->type == 'company' || \Auth::user()->type == 'Sc Admin')
         {
             $validator = \Validator::make(
                 $request->all(), [
@@ -205,7 +205,7 @@ class EmailTemplateController extends Controller
             }
 
             $emailLangTemplate = EmailTemplateLang::where('parent_id', '=', $id)->where('lang', '=', $request->lang)->first();
-           
+
             // if record not found then create new record else update it.
             if(empty($emailLangTemplate))
             {
@@ -220,7 +220,7 @@ class EmailTemplateController extends Controller
             {
                 $emailLangTemplate->subject = $request['subject'];
                 $emailLangTemplate->content = $request['content'];
-                
+
                 $emailLangTemplate->save();
             }
 
@@ -240,11 +240,11 @@ class EmailTemplateController extends Controller
     // Used For Update Status Company Wise.
     // public function updateStatus(Request $request, $id)
     // {
-        
+
     //     $usr = \Auth::user();
     //     if (\Auth::user()->type == 'company' || \Auth::user()->type == 'super admin')
     //     {
-            
+
     //         $user_email = UserEmailTemplate::where('id', '=', $id)->where('user_id', '=', $usr->id)->first();
     //         // dd( $user_email  );
     //         if(!empty($user_email))
@@ -280,21 +280,21 @@ class EmailTemplateController extends Controller
     // }
     public function updateStatus(Request $request, $id)
     {
-    
+
 
 
         $usr = \Auth::user();
 
-        
-     
-        if($usr->type == 'company')
+
+
+        if($usr->type == 'company' || \Auth::user()->type == 'Sc Admin')
         {
 
             $user_email = UserEmailTemplate::where('template_id', $id)->where('user_id', $usr->id)->first();
 
             if(!empty($user_email))
             {
-               
+
                 if($request->status == 1)
                 {
                     $user_email->is_active = 0;
@@ -303,7 +303,7 @@ class EmailTemplateController extends Controller
                 {
                     $user_email->is_active = 1;
                 }
-             
+
 
 
                 $user_email->save();
